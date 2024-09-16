@@ -1,6 +1,6 @@
 resource "github_repository" "this" {
   name        = "io-eudiw-wpb"
-  description = "Initial repository for DevEx activities."
+  description = "This repository contains the code to implement the EUDI Wallet Provider backend (WP)."
 
   visibility = "public"
 
@@ -19,7 +19,7 @@ resource "github_repository" "this" {
   has_issues      = false
   has_downloads   = false
 
-  topics = ["dx", "typescript"]
+  topics = ["io", "eudiw"]
 
   vulnerability_alerts = true
 
