@@ -8,9 +8,9 @@ terraform {
 
   backend "azurerm" {
     resource_group_name  = "terraform-state-rg"
-    storage_account_name = "tfproddx"
+    storage_account_name = "tfappdevio"
     container_name       = "terraform-state"
-    key                  = "dx-typescript.identity.prod.westeurope.tfstate"
+    key                  = "${local.domain}.identity.${local.env}.${local.location}.tfstate"
   }
 }
 

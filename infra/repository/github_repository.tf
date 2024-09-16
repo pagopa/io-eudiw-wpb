@@ -1,5 +1,5 @@
 resource "github_repository" "this" {
-  name        = "dx-typescript"
+  name        = "io-eudiw-wpb"
   description = "Initial repository for DevEx activities."
 
   visibility = "public"
