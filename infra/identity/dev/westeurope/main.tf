@@ -10,7 +10,7 @@ terraform {
     resource_group_name  = "terraform-state-rg"
     storage_account_name = "tfappdevio"
     container_name       = "terraform-state"
-    key                  = "${local.domain}.identity.${local.env}.${local.location}.tfstate"
+    key                  = "io-eudiw-wpb.identity.dev.westeurope.tfstate"
   }
 }
 
