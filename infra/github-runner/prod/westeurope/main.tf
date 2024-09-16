@@ -10,7 +10,7 @@ terraform {
     resource_group_name  = "terraform-state-rg"
     storage_account_name = "tfproddx"
     container_name       = "terraform-state"
-    key                  = "dx-typescript.github-runner.prod.westeurope.tfstate"
+    key                  = "io-eudiw-wpb.github-runner.prod.westeurope.tfstate"
   }
 }
 

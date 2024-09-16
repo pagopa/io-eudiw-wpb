@@ -6,13 +6,13 @@ locals {
   project   = "${local.prefix}-${local.env_short}"
   domain    = "typescript"
 
-  repo_name = "dx-typescript"
+  repo_name = "io-eudiw-wpb"
 
   tags = {
     CostCenter  = "TS310 - PAGAMENTI & SERVIZI"
     CreatedBy   = "Terraform"
     Environment = "Prod"
     Owner       = "DevEx"
-    Source      = "https://github.com/pagopa/dx-typescript/blob/main/infra/identity/prod/westeurope"
+    Source      = "https://github.com/pagopa/io-eudiw-wpb/blob/main/infra/identity/prod/westeurope"
   }
 }
