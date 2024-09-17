@@ -25,3 +25,15 @@ resource "azurerm_resource_group" "rg" {
 
   tags = local.tags
 }
+
+module "function_api" {
+  source = "../modules/function_api"
+
+  prefix              = local.prefix
+  env_short           = local.env_short
+  location            = local.location
+  domain              = local.domain
+  resource_group_name = azurerm_resource_group.rg.name
+
+  tags = local.tags
+}
