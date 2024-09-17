@@ -12,13 +12,13 @@ locals {
   ci = {
     secrets = {
       "ARM_CLIENT_ID" = data.azurerm_user_assigned_identity.identity_prod_ci.client_id
-    },
-    reviewers_teams = ["io-wallet", "engineering-team-cloud-eng"]
+    }
   }
 
   cd = {
     secrets = {
       "ARM_CLIENT_ID" = data.azurerm_user_assigned_identity.identity_prod_cd.client_id
-    }
+    },
+    reviewers_teams = ["io-wallet", "engineering-team-cloud-eng"]
   }
 }
