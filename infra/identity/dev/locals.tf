@@ -2,7 +2,6 @@ locals {
   prefix    = "io"
   env_short = "d"
   env       = "dev"
-  location  = "westeurope"
   project   = "${local.prefix}-${local.env_short}"
   domain    = "eudiw"
 
