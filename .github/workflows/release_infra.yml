@@ -10,11 +10,10 @@ on:
       - "infra/resources/**"
 
 jobs:
-  release_prod:
+  release_dev:
     uses: pagopa/dx/.github/workflows/infra_apply.yaml@main
     name: Release Infrastructure
     secrets: inherit
     with:
-      environment: prod
-      region: westeurope
+      environment: dev
       base_path: infra/resources
