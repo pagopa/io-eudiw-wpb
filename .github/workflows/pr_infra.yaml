@@ -16,11 +16,10 @@ on:
       - ".github/workflows/templates/infra_**"
 
 jobs:
-  code_review_prod:
+  code_review_dev:
     uses: pagopa/dx/.github/workflows/infra_plan.yaml@main
     name: Code Review Infrastructure Plan
     secrets: inherit
     with:
-      environment: prod
-      region: westeurope
+      environment: dev
       base_path: infra/resources
