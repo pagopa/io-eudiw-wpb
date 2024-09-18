@@ -162,7 +162,14 @@ terraform apply
 #### repository
 
 Set up the current repository settings.
-It's intended to be executed once on a local machine at project initialization.
+It's intended to be executed once on a local machine during project initialization. Requirements:
+- Generate a Fine-grained Personal Access Token (`PAT`) with the following permissions for this repository:
+  - Organization:
+    - Read access to members
+  - Repository:
+    - Read access to metadata
+    - Read and Write access to actions variables, administration, environments, and secrets
+- Set `GITHUB_TOKEN` to contain the generated `PAT`
 
 ⚠️ The following edits have to be done to work on the repository:
 
