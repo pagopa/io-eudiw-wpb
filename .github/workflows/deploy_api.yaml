@@ -24,3 +24,4 @@ jobs:
       resource_group_name: io-d-eudiw-rg-01
       function_app_name: io-d-itn-eudiw-api-func-01
       health_check_path: "/info"
+      use_private_agent: false
