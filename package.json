@@ -2,12 +2,11 @@
   "name": "io-eudiw-wpb",
   "private": true,
   "scripts": {
-    "code-review": "turbo run format:check lint:check test:coverage",
+    "code-review": "turbo run typecheck lint:check test:coverage",
     "lint": "turbo run lint",
     "test": "turbo run test",
     "test:coverage": "turbo run test:coverage",
     "build": "turbo run build",
-    "typecheck": "turbo run typecheck",
     "version": "changeset version",
     "release": "changeset tag",
     "generate": "turbo run generate"
