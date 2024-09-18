@@ -1,5 +1,6 @@
 locals {
-  project = "dx-p"
+  project = "io-d"
+  domain  = "eudiw"
 
   identity_resource_group_name = "${local.project}-identity-rg"
 
@@ -10,13 +11,14 @@ locals {
 
   ci = {
     secrets = {
-      "ARM_CLIENT_ID" = data.azurerm_user_assigned_identity.identity_prod_ci.client_id
+      "ARM_CLIENT_ID" = data.azurerm_user_assigned_identity.identity_dev_ci.client_id
     }
   }
 
   cd = {
     secrets = {
-      "ARM_CLIENT_ID" = data.azurerm_user_assigned_identity.identity_prod_cd.client_id
-    }
+      "ARM_CLIENT_ID" = data.azurerm_user_assigned_identity.identity_dev_cd.client_id
+    },
+    reviewers_teams = ["io-wallet", "engineering-team-cloud-eng"]
   }
 }
