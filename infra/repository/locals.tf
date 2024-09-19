@@ -21,4 +21,10 @@ locals {
     },
     reviewers_teams = ["io-wallet", "engineering-team-cloud-eng"]
   }
+
+  app_cd = {
+    secrets = {
+      "ARM_CLIENT_ID" = data.azurerm_user_assigned_identity.identity_app_dev_cd.client_id
+    }
+  }
 }
