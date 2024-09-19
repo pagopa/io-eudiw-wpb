@@ -22,3 +22,4 @@ jobs:
       environment: app-dev
       resource_group_name: io-d-eudiw-rg-01
       web_app_name: io-d-itn-eudiw-api-func-01
+      use_private_agent: false
