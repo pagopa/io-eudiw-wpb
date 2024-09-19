@@ -7,9 +7,9 @@
   "scripts": {
     "clean": "shx rm -rf dist",
     "clean:generated": "shx rm -rf ./src/generated",
-    "build": "tsc",
+    "build": "npm run generate && tsc",
     "build:watch": "npm run build -w",
-    "typecheck": "npm run generate && npm run build --noemit",
+    "typecheck": "npm run build --noemit",
     "extensions:install": "func extensions install",
     "start": "func start --javascript",
     "start:watch": "npm run start watch",
