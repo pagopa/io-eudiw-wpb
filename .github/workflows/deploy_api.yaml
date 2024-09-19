@@ -12,16 +12,13 @@ jobs:
   deploy:
     name: Deploy API
     concurrency:
-      # This value must be equals to the one set in the DX Workflow: https://github.com/pagopa/dx/blob/51ca1/.github/workflows/function_app_deploy.yaml#L36C10-L36C35
       group: ${{ github.workflow }}-cd
       # Override this configuration to prevent cancelling a running deploy.
       cancel-in-progress: false
-    uses: pagopa/dx/.github/workflows/function_app_deploy.yaml@main
+    uses: pagopa/dx/.github/workflows/web_app_deploy.yaml@main
     secrets: inherit
     with:
       workspace_name: azure-functions-api
-      environment: app-dev
+      environment: app-prod
       resource_group_name: io-d-eudiw-rg-01
-      function_app_name: io-d-itn-eudiw-api-func-01
-      health_check_path: "/info"
-      use_private_agent: false
+      web_app_name: io-d-itn-eudiw-api-func-01
