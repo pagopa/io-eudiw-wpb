@@ -37,3 +37,8 @@ variable "resource_group_name" {
   type        = string
   description = "Resource group name for the Function App services"
 }
+
+variable "app_insights_connection_string" {
+  type        = string
+  description = "Connection string of application inisights"
+}
