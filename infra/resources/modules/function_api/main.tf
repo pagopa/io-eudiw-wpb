@@ -1,5 +1,5 @@
 module "func_api" {
-  source = "github.com/pagopa/dx//infra/modules/azure_function_app_exposed?ref=19f4b22"
+  source = "github.com/pagopa/dx//infra/modules/azure_function_app_exposed?ref=ef47443"
 
   environment = {
     prefix          = var.prefix
