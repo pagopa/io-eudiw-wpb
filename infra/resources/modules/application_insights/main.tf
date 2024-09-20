@@ -1,5 +1,5 @@
 resource "azurerm_log_analytics_workspace" "main" {
-  name                = "${var.project}-${var.domain}-law-01"
+  name                = "${var.project}-${var.domain}-log-01"
   location            = var.location
   resource_group_name = var.resource_group_name
   sku                 = "PerGB2018"
@@ -9,7 +9,7 @@ resource "azurerm_log_analytics_workspace" "main" {
 }
 
 resource "azurerm_application_insights" "main" {
-  name                = "${var.project}-${var.domain}-ai-01"
+  name                = "${var.project}-${var.domain}-appi-01"
   location            = var.location
   resource_group_name = var.resource_group_name
   application_type    = "other"
