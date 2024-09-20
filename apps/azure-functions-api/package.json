@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "Azure Function REST API Template",
   "main": "./dist/main.js",
+  "//": "comment! The 'files': host.json property is required until dx/web_app_deploy is fixed",
   "files": ["host.json"],
   "license": "MIT",
   "scripts": {
