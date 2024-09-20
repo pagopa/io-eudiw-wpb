@@ -40,5 +40,6 @@ variable "resource_group_name" {
 
 variable "app_insights_connection_string" {
   type        = string
+  sensitive   = true
   description = "Connection string of application inisights"
 }
