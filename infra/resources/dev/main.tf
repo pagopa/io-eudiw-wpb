@@ -26,6 +26,17 @@ resource "azurerm_resource_group" "rg" {
   tags = local.tags
 }
 
+module "app_insight" {
+  source = "../modules/application_insights"
+
+  project             = local.project
+  location            = local.location
+  domain              = local.domain
+  resource_group_name = azurerm_resource_group.rg.name
+
+  tags = local.tags
+}
+
 module "function_api" {
   source = "../modules/function_api"
 
@@ -34,6 +45,8 @@ module "function_api" {
   location            = local.location
   domain              = local.domain
   resource_group_name = azurerm_resource_group.rg.name
+
+  app_insights_connection_string = module.app_insight.connection_string
 
   tags = local.tags
 }

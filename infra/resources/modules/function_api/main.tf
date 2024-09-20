@@ -25,7 +25,8 @@ module "func_api" {
     {}
   )
 
-  tier = "standard"
+  tier                                   = "standard"
+  application_insights_connection_string = var.app_insights_connection_string
 
   tags = var.tags
 }
