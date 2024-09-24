@@ -4,7 +4,9 @@
   "description": "Azure Function REST API Template",
   "main": "./dist/main.js",
   "//": "comment! The 'files': host.json property is required until dx/web_app_deploy is fixed",
-  "files": ["host.json"],
+  "files": [
+    "host.json"
+  ],
   "license": "MIT",
   "scripts": {
     "clean": "shx rm -rf dist",
@@ -18,6 +20,8 @@
     "lint": "eslint --fix",
     "lint:check": "eslint",
     "lint:api": "sh api-lint.sh",
+    "test": "vitest",
+    "test:coverage": "vitest --coverage",
     "generate": "shx mkdir -p ./src/generated/definitions/endpoints && gen-api-models --api-spec ./api/openapi.yaml --no-strict --out-dir ./src/generated/definitions/endpoints"
   },
   "devDependencies": {
@@ -40,7 +44,10 @@
     "@pagopa/handler-kit-azure-func": "^2.0.1",
     "@pagopa/openapi-codegen-ts": "^13.2.0",
     "@pagopa/ts-commons": "^12.6.0",
+    "@vitest/coverage-v8": "^2.1.1",
     "fp-ts": "^2.16.5",
-    "io-ts": "^2.2.21"
+    "io-ts": "^2.2.21",
+    "vitest": "^2.1.1",
+    "vitest-mock-extended": "^2.0.2"
   }
 }
