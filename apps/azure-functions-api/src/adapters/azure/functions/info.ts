@@ -5,7 +5,7 @@ import * as H from '@pagopa/handler-kit';
 import * as RTE from 'fp-ts/lib/ReaderTaskEither';
 import * as TE from 'fp-ts/lib/TaskEither';
 import { httpAzureFunction } from '@pagopa/handler-kit-azure-func';
-import { ApplicationInfo } from '../../../generated/definitions/internal/ApplicationInfo';
+import { ApplicationInfo } from '../../../generated/definitions/endpoints/ApplicationInfo';
 
 const applicativeValidation = RTE.getApplicativeReaderTaskValidation(
   Task.ApplicativePar,

@@ -6,6 +6,9 @@
     "FUNCTIONS_WORKER_RUNTIME": "node",
     "APPINSIGHTS_INSTRUMENTATIONKEY": "dummy",
     "SLOT_TASK_HUBNAME": "FnAzureApiSlotTaskName",
-    "NODE_ENV": "development"
+    "NODE_ENV": "development",
+
+    "COSMOSDB_ENDPOINT": "",
+    "COSMOSDB_DATABASE_NAME": ""
   }
 }
