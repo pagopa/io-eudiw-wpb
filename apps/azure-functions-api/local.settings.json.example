@@ -8,7 +8,7 @@
     "SLOT_TASK_HUBNAME": "FnAzureApiSlotTaskName",
     "NODE_ENV": "development",
 
-    "COSMOSDB_ENDPOINT": "",
-    "COSMOSDB_DATABASE_NAME": ""
+    "COSMOSDB_ENDPOINT": "<put-here-the-the-cosmos-database-endpoint>",
+    "COSMOSDB_DATABASE_NAME": "<put-here-the-name-of-cosmos-database>"
   }
 }
