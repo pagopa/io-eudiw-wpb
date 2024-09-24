@@ -45,9 +45,6 @@ module "cosmos" {
   domain              = local.domain
   resource_group_name = azurerm_resource_group.rg.name
 
-  # private_endpoint_subnet_id = data.azurerm_subnet.pep.id
-  # private_link_documents_id  = data.azurerm_private_dns_zone.privatelink_documents.id
-
   tags = local.tags
 }
 
