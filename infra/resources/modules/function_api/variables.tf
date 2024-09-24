@@ -43,3 +43,12 @@ variable "app_insights_connection_string" {
   sensitive   = true
   description = "Connection string of application inisights"
 }
+
+variable "cosmos_db" {
+  type = object({
+    name                = string
+    resource_group_name = string
+    database_name       = string
+    endpoint            = string
+  })
+}

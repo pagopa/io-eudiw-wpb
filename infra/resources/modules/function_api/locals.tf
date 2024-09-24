@@ -14,5 +14,8 @@ locals {
 
     WEBSITE_SWAP_WARMUP_PING_PATH     = "/info"
     WEBSITE_SWAP_WARMUP_PING_STATUSES = "200"
+
+    COSMOSDB_ENDPOINT      = var.cosmos_db.endpoint
+    COSMOSDB_DATABASE_NAME = var.cosmos_db.database_name
   }
 }

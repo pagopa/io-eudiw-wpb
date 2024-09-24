@@ -1,36 +1,46 @@
+import { pipe } from 'fp-ts/lib/function';
 import * as t from 'io-ts';
 import * as E from 'fp-ts/lib/Either';
-import { pipe } from 'fp-ts/lib/function';
-import * as reporters from '@pagopa/ts-commons/lib/reporters';
+import * as PR from 'io-ts/PathReporter';
+import { NonEmptyString } from '@pagopa/ts-commons/lib/strings';
 import { withDefault } from '@pagopa/ts-commons/lib/types';
 import { NumberFromString } from '@pagopa/ts-commons/lib/numbers';
 
-export type Config = t.TypeOf<typeof Config>;
-export const Config = t.type({
+export interface Config {
+  readonly cosmosdb: {
+    readonly endpoint: string;
+    readonly databaseName: string;
+  };
+}
+
+export const EnvsCodec = t.type({
+  COSMOSDB_ENDPOINT: NonEmptyString,
+  COSMOSDB_DATABASE_NAME: NonEmptyString,
   // Default is 10 sec timeout
   FETCH_TIMEOUT_MS: withDefault(t.string, '10000').pipe(NumberFromString),
   isProduction: t.boolean,
 });
-
-export const envConfig = {
-  ...process.env,
-  isProduction: process.env.NODE_ENV === 'production',
-};
-
-const errorOrConfig: t.Validation<Config> = Config.decode(envConfig);
 
 /**
  * Read the application configuration and check for invalid values.
  *
  * @returns either the configuration values or an Error
  */
-export const getConfigOrError = (): E.Either<Error, Config> =>
+export const getConfigOrError = (
+  envs: Record<string, undefined | string>,
+): E.Either<Error, Config> =>
   pipe(
-    errorOrConfig,
-    E.mapLeft(
-      (errors: readonly t.ValidationError[]) =>
-        new Error(
-          `Invalid configuration: ${reporters.readableReportSimplified(errors)}`,
-        ),
+    EnvsCodec.decode({
+      ...envs,
+      isProduction: envs.NODE_ENV === 'production',
+    }),
+    E.bimap(
+      (errors) => new Error(PR.failure(errors).join('\n')),
+      (envs) => ({
+        cosmosdb: {
+          endpoint: envs.COSMOSDB_ENDPOINT,
+          databaseName: envs.COSMOSDB_DATABASE_NAME,
+        },
+      }),
     ),
   );

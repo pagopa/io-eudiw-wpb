@@ -1,0 +1,13 @@
+locals {
+  cosmosdb_containers = [
+    # Each document represents a nonce
+    {
+      name               = "nonces"
+      partition_key_path = "/id"
+      autoscale_settings = {
+        max_throughput = 1000
+      }
+      default_ttl = 300
+    }
+  ]
+}
