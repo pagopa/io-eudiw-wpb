@@ -29,11 +29,12 @@ const nonceRepository = makeNonceRepository(
 
 const env = {
   nonceRepository,
+  cosmosDB,
 };
 
 app.http('Info', {
   authLevel: 'anonymous',
-  handler: InfoFn({}),
+  handler: InfoFn(env),
   methods: ['GET'],
   route: 'info',
 });
