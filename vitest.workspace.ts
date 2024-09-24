@@ -1,1 +1,1 @@
-export default ["*/*vitest*"];
+export default ["apps/**", "packages/**"];
