@@ -26,7 +26,7 @@ export const generateNonce = ({ nonceRepository, nextNonce }: NonceEnv) =>
     TE.chainFirst(nonceRepository.insert),
   );
 
-export const deleteNonce =
+export const validateNonce =
   (nonce: string) =>
   ({ nonceRepository }: NonceEnv) =>
     nonceRepository.delete(nonce);
