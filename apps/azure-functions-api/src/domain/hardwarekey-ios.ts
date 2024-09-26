@@ -57,6 +57,7 @@ export const extractHardwareKeyFromIOS = (request: WalletInstanceRequest) =>
             // eslint-disable-next-line functional/no-throw-statements
             throw new Error('no client CA certificate found');
           }
+          // extract and return the hardware key
           return jose.exportJWK(clientCertificate.publicKey);
         },
         () => new Error('Error extracting publicKey'),
