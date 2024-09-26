@@ -7,9 +7,10 @@ import {
   createWalletInstance,
 } from '../../../domain/wallet-instance';
 import { errorToProblemJson } from './errors';
-import { parseRequestBody } from './middleware';
+import { parseHeaderParameter, parseRequestBody } from './middleware';
 import { CreateWalletInstanceBody } from '../../../generated/definitions/endpoints/CreateWalletInstanceBody';
 import { NonceEnv } from '../../../domain/nonce';
+import { User } from '../../../domain/user';
 
 const makeHandler: H.Handler<
   H.HttpRequest,
@@ -24,8 +25,13 @@ const makeHandler: H.Handler<
       RTE.fromEither(parseRequestBody(CreateWalletInstanceBody)(req)),
     ),
     // TODO: Find out where to get the authenticated user.
-    RTE.apSW('userId', RTE.of('aUserId')),
-    RTE.flatMap(({ requestBody }) => createWalletInstance(requestBody)),
+    RTE.apSW(
+      'userId',
+      RTE.fromEither(parseHeaderParameter(User.props.id, 'x-user-id')(req)),
+    ),
+    RTE.flatMap(({ requestBody, userId }) =>
+      createWalletInstance(requestBody, userId),
+    ),
     RTE.mapBoth(errorToProblemJson, () => H.empty),
     RTE.orElseW(RTE.of),
   ),

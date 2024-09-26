@@ -9,6 +9,7 @@ import { CreateWalletInstanceBody as WalletInstanceRequest } from '../generated/
 import { IsoDateFromString } from '@pagopa/ts-commons/lib/dates';
 import { NonEmptyString } from '@pagopa/ts-commons/lib/strings';
 import { nowDate } from './clock';
+import { User } from './user';
 
 export interface WalletInstanceEnv {
   readonly walletInstanceRepository: WalletInstanceRepository;
@@ -23,18 +24,21 @@ export const WalletInstanceCodec = t.type({
   hardwareKey: JwkPublicKey,
   id: NonEmptyString,
   signCount: t.number,
-  // userId: User.props.id,
+  userId: User.props.id,
 });
 export type WalletInstance = t.TypeOf<typeof WalletInstanceCodec>;
 
-export const createWalletInstance = (request: WalletInstanceRequest) =>
+export const createWalletInstance = (
+  request: WalletInstanceRequest,
+  userId: User['id'],
+) =>
   pipe(
     // validate nonce; a.k.a. consume the nonce
     validateNonce(request.challenge),
     // validate the wallet key attestation
     RTE.flatMapTaskEither(() => validateKeyAttestation(request)),
     // create the wallet instance
-    RTE.flatMap((vka) => makeWalletInstance({ ...vka, ...request })),
+    RTE.flatMap((vka) => makeWalletInstance({ ...vka, ...request, userId })),
     // store the wallet instance
     RTE.flatMap(insertWalletInstance),
   );
@@ -42,10 +46,12 @@ export const createWalletInstance = (request: WalletInstanceRequest) =>
 interface MakeWalletInstanceParams {
   readonly hardwareKey: WalletInstance['hardwareKey'];
   readonly hardware_key_tag: WalletInstanceRequest['hardware_key_tag'];
+  readonly userId: User['id'];
 }
 const makeWalletInstance = ({
   hardwareKey,
   hardware_key_tag,
+  userId,
 }: MakeWalletInstanceParams) =>
   pipe(
     nowDate(),
@@ -54,6 +60,7 @@ const makeWalletInstance = ({
       hardwareKey: hardwareKey,
       id: hardware_key_tag,
       signCount: 0,
+      userId: userId,
     })),
   );
 

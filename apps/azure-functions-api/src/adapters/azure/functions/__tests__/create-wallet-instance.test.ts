@@ -9,11 +9,14 @@ import { androidMockData } from '../../../../domain/__tests__/hardwarekey-androi
 describe('CreateWalletInstanceFn', () => {
   it('should return a 204 HTTP response given valid ios data', async () => {
     const { env, ctx } = makeTestEnv();
-    const request = makeHttpRequest({
-      challenge: iOSMockData.challenge,
-      hardware_key_tag: iOSMockData.keyId,
-      key_attestation: iOSMockData.attestation,
-    });
+    const request = makeHttpRequest(
+      {
+        challenge: iOSMockData.challenge,
+        hardware_key_tag: iOSMockData.keyId,
+        key_attestation: iOSMockData.attestation,
+      },
+      { 'x-user-id': 'aUserId' },
+    );
 
     env.nonceRepository.delete.mockReturnValueOnce(TE.right(void 0));
     env.walletInstanceRepository.insert.mockReturnValueOnce(TE.right(void 0));
@@ -25,11 +28,14 @@ describe('CreateWalletInstanceFn', () => {
 
   it('should return a 204 HTTP response given valid android data', async () => {
     const { env, ctx } = makeTestEnv();
-    const request = makeHttpRequest({
-      challenge: androidMockData.challenge,
-      hardware_key_tag: androidMockData.keyId,
-      key_attestation: androidMockData.attestation,
-    });
+    const request = makeHttpRequest(
+      {
+        challenge: androidMockData.challenge,
+        hardware_key_tag: androidMockData.keyId,
+        key_attestation: androidMockData.attestation,
+      },
+      { 'x-user-id': 'aUserId' },
+    );
 
     env.nonceRepository.delete.mockReturnValueOnce(TE.right(void 0));
     env.walletInstanceRepository.insert.mockReturnValueOnce(TE.right(void 0));
@@ -52,11 +58,14 @@ describe('CreateWalletInstanceFn', () => {
 
   it('should return a 500 HTTP response on challenge validation error', async () => {
     const { env, ctx } = makeTestEnv();
-    const request = makeHttpRequest({
-      challenge: 'aChallenge',
-      hardware_key_tag: 'aKeyId',
-      key_attestation: 'anAttestation',
-    });
+    const request = makeHttpRequest(
+      {
+        challenge: 'aChallenge',
+        hardware_key_tag: 'aKeyId',
+        key_attestation: 'anAttestation',
+      },
+      { 'x-user-id': 'aUserId' },
+    );
 
     env.nonceRepository.delete.mockReturnValueOnce(
       TE.left(new Error('invalid challenge')),
