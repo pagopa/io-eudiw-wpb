@@ -2,15 +2,33 @@ import { describe, expect, it } from 'vitest';
 import * as TE from 'fp-ts/lib/TaskEither';
 import { makeTestEnv } from './mocks';
 import { CreateWalletInstanceFn } from '../create-wallet-instance';
-import { makeHttpRequest, iOSMockData } from './data';
+import { makeHttpRequest } from './data';
+import { iOSMockData } from '../../../../domain/__tests__/hardwarekey-ios/data';
+import { androidMockData } from '../../../../domain/__tests__/hardwarekey-android/data';
 
 describe('CreateWalletInstanceFn', () => {
-  it('should return a 204 HTTP response', async () => {
+  it('should return a 204 HTTP response given valid ios data', async () => {
     const { env, ctx } = makeTestEnv();
     const request = makeHttpRequest({
       challenge: iOSMockData.challenge,
       hardware_key_tag: iOSMockData.keyId,
       key_attestation: iOSMockData.attestation,
+    });
+
+    env.nonceRepository.delete.mockReturnValueOnce(TE.right(void 0));
+    env.walletInstanceRepository.insert.mockReturnValueOnce(TE.right(void 0));
+
+    const actual = await CreateWalletInstanceFn(env)(request, ctx);
+
+    expect(actual.status).toStrictEqual(204);
+  });
+
+  it('should return a 204 HTTP response given valid android data', async () => {
+    const { env, ctx } = makeTestEnv();
+    const request = makeHttpRequest({
+      challenge: androidMockData.challenge,
+      hardware_key_tag: androidMockData.keyId,
+      key_attestation: androidMockData.attestation,
     });
 
     env.nonceRepository.delete.mockReturnValueOnce(TE.right(void 0));

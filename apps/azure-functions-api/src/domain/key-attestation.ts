@@ -18,6 +18,7 @@ export const validateKeyAttestation = (request: WalletInstanceRequest) =>
       extractHardwareKeyFromAndroid(request),
     ],
     firstRightOrLefts,
+    TE.mapError((errors) => new Error(`${errors.map((_) => _.message)}`)),
     TE.map((hardwareKey) => ({ hardwareKey })),
   );
 

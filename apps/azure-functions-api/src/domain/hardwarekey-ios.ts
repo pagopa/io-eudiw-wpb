@@ -33,15 +33,17 @@ export const extractHardwareKeyFromIOS = (request: WalletInstanceRequest) =>
   pipe(
     E.tryCatch(
       () => Buffer.from(request.key_attestation, 'base64'),
-      () => new Error(`Invalid attestation: ${request.key_attestation}`),
+      () => new Error(`[iOS Hardware Key] Invalid attestation`),
     ),
     E.flatMap((data) =>
       E.tryCatch(
         () => cbor.decode(data),
-        () => new Error(`[iOS Attestation] Unable to decode data`),
+        () => new Error(`[iOS Hardware Key] Unable to decode data`),
       ),
     ),
-    E.flatMap(H.parse(iOsAttestation, 'Invalid IOS Attestation')),
+    E.flatMap(
+      H.parse(iOsAttestation, '[iOS Hardware Key] Invalid Attestation'),
+    ),
     TE.fromEither,
     TE.flatMap((attestation) =>
       TE.tryCatch(
@@ -55,13 +57,17 @@ export const extractHardwareKeyFromIOS = (request: WalletInstanceRequest) =>
           );
           if (clientCertificate === undefined) {
             // eslint-disable-next-line functional/no-throw-statements
-            throw new Error('no client CA certificate found');
+            throw new Error(
+              '[iOS Hardware Key] No client CA certificate found',
+            );
           }
           // extract and return the hardware key
           return jose.exportJWK(clientCertificate.publicKey);
         },
-        () => new Error('Error extracting publicKey'),
+        () => new Error('[iOS Hardware Key] Error extracting publicKey'),
       ),
     ),
-    TE.flatMapEither(H.parse(JwkPublicKey, 'Invalid PublicKey')),
+    TE.flatMapEither(
+      H.parse(JwkPublicKey, '[iOS Hardware Key] Invalid PublicKey'),
+    ),
   );

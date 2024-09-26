@@ -21,14 +21,17 @@ export const base64ToPem = (b64cert: string) =>
       new X509Certificate(
         `-----BEGIN CERTIFICATE-----\n${b64cert}-----END CERTIFICATE-----`,
       ),
-    () => new Error('Unable to decode cert'),
+    () => new Error('[Android Hardware Key] Unable to decode cert'),
   );
 
 export const extractHardwareKeyFromAndroid = (request: WalletInstanceRequest) =>
   pipe(
     E.tryCatch(
       () => Buffer.from(request.key_attestation, 'base64'),
-      () => new Error(`Invalid attestation: ${request.key_attestation}`),
+      () =>
+        new Error(
+          `[Android Hardware Key] Invalid attestation: ${request.key_attestation}`,
+        ),
     ),
     E.map((data) => data.toString('utf-8').split(',')),
     E.flatMap(E.traverseArray(base64ToPem)),
@@ -48,13 +51,17 @@ export const extractHardwareKeyFromAndroid = (request: WalletInstanceRequest) =>
           });
           if (certWithExtension === undefined)
             // eslint-disable-next-line functional/no-throw-statements
-            throw new Error('No key attestation extension found');
+            throw new Error(
+              '[Android Hardware Key] No key attestation extension found',
+            );
 
           // extract and return the hardware key
           return jose.exportJWK(certWithExtension.publicKey);
         },
-        () => new Error('Error extracting publicKey'),
+        () => new Error('[Android Hardware Key] Error extracting publicKey'),
       ),
     ),
-    TE.flatMapEither(H.parse(JwkPublicKey, 'Invalid PublicKey')),
+    TE.flatMapEither(
+      H.parse(JwkPublicKey, '[Android Hardware Key] Invalid PublicKey'),
+    ),
   );
