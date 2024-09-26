@@ -7,6 +7,8 @@ import * as E from 'fp-ts/Either';
 import { CosmosClient } from '@azure/cosmos';
 import { DefaultAzureCredential } from '@azure/identity';
 import { makeNonceRepository } from './adapters/azure/cosmosdb/nonce';
+import { CreateWalletInstanceFn } from './adapters/azure/functions/create-wallet-instance';
+import { makeWalletInstanceRepository } from './adapters/azure/cosmosdb/wallet-instance';
 
 const config = pipe(
   getConfigOrError(process.env),
@@ -27,8 +29,13 @@ const nonceRepository = makeNonceRepository(
   cosmosDB.database(config.cosmosdb.databaseName),
 );
 
+const walletInstanceRepository = makeWalletInstanceRepository(
+  cosmosDB.database(config.cosmosdb.databaseName),
+);
+
 const env = {
   nonceRepository,
+  walletInstanceRepository,
   cosmosDB,
 };
 
@@ -44,4 +51,11 @@ app.http('getNonce', {
   handler: GetNonceFn(env),
   methods: ['GET'],
   route: 'nonce',
+});
+
+app.http('createWalletInstance', {
+  authLevel: 'function',
+  handler: CreateWalletInstanceFn(env),
+  methods: ['POST'],
+  route: 'wallet-instances',
 });
