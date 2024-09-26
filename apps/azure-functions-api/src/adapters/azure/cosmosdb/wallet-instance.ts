@@ -6,7 +6,7 @@ import { WalletInstanceRepository } from '../../../domain/wallet-instance';
 
 export const makeWalletInstanceRepository = (
   db: Database,
-  containerName = 'nonces',
+  containerName = 'wallet-instances',
 ): WalletInstanceRepository => {
   const container = db.container(containerName);
   return {
