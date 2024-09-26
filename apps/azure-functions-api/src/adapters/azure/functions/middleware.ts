@@ -1,6 +1,5 @@
 import { pipe } from 'fp-ts/function';
 import { Decoder } from 'io-ts';
-import * as E from 'fp-ts/lib/Either';
 import * as H from '@pagopa/handler-kit';
 
 /**
