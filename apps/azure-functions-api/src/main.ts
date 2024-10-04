@@ -9,6 +9,8 @@ import { DefaultAzureCredential } from '@azure/identity';
 import { makeNonceRepository } from './adapters/azure/cosmosdb/nonce';
 import { CreateWalletInstanceFn } from './adapters/azure/functions/create-wallet-instance';
 import { makeWalletInstanceRepository } from './adapters/azure/cosmosdb/wallet-instance';
+import { CreateWalletAttestationFn } from './adapters/azure/functions/create-wallet-attestation';
+import { makeJwksRepository } from './adapters/in-memory/signer';
 
 const config = pipe(
   getConfigOrError(process.env),
@@ -33,9 +35,12 @@ const walletInstanceRepository = makeWalletInstanceRepository(
   cosmosDB.database(config.cosmosdb.databaseName),
 );
 
+const jwksRepository = makeJwksRepository(config.signer.jwks);
+
 const env = {
   nonceRepository,
   walletInstanceRepository,
+  jwksRepository,
   cosmosDB,
 };
 
@@ -46,16 +51,23 @@ app.http('Info', {
   route: 'info',
 });
 
-app.http('getNonce', {
+app.http('GetNonce', {
   authLevel: 'function',
   handler: GetNonceFn(env),
   methods: ['GET'],
   route: 'nonce',
 });
 
-app.http('createWalletInstance', {
+app.http('CreateWalletInstance', {
   authLevel: 'function',
   handler: CreateWalletInstanceFn(env),
   methods: ['POST'],
   route: 'wallet-instances',
+});
+
+app.http('CreateWalletAttestation', {
+  authLevel: 'function',
+  handler: CreateWalletAttestationFn(env),
+  methods: ['POST'],
+  route: 'token',
 });
