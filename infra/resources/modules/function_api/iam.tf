@@ -11,6 +11,15 @@ module "func_api_role" {
     }
   ]
 
+  key_vault = [
+    {
+      name                = var.key_vault.name
+      resource_group_name = var.key_vault.resource_group_name
+      roles = {
+        secrets = "reader"
+      }
+    }
+  ]
 }
 
 module "func_api_slot_role" {
@@ -27,4 +36,13 @@ module "func_api_slot_role" {
     }
   ]
 
+  key_vault = [
+    {
+      name                = var.key_vault.name
+      resource_group_name = var.key_vault.resource_group_name
+      roles = {
+        secrets = "reader"
+      }
+    }
+  ]
 }
