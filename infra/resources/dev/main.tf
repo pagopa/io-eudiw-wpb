@@ -19,6 +19,8 @@ provider "azurerm" {
   features {}
 }
 
+data "azurerm_client_config" "current" {}
+
 resource "azurerm_resource_group" "rg" {
   name     = "${local.project}-${local.domain}-rg-01"
   location = local.location
@@ -28,6 +30,19 @@ resource "azurerm_resource_group" "rg" {
 
 module "app_insight" {
   source = "../modules/application_insights"
+
+  project             = local.project
+  location            = local.location
+  domain              = local.domain
+  resource_group_name = azurerm_resource_group.rg.name
+
+  tags = local.tags
+}
+
+module "key_vault" {
+  source = "../modules/key_vault"
+
+  tenant_id = data.azurerm_client_config.current.tenant_id
 
   project             = local.project
   location            = local.location
