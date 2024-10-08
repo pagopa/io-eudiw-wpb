@@ -27,7 +27,7 @@ export const signJwt =
       env.jwksRepository.get(),
       TE.flatMap((jwk) =>
         TE.tryCatch(async () => {
-          const header = { ...jwt.header, kid: jwk.public.kid, alg: 'RS256' };
+          const header = { ...jwt.header, kid: jwk.public.kid, alg: 'ES256' };
           const joseKey = await jose.importJWK(jwk.private);
           const signedJwt = (await new jose.SignJWT(jwt.payload)
             .setProtectedHeader(header)

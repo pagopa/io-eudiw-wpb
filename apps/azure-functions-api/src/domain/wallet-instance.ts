@@ -20,7 +20,6 @@ export interface WalletInstanceRepository {
   readonly insert: (data: WalletInstance) => TE.TaskEither<Error, void>;
   readonly get: (
     id: WalletInstance['id'],
-    userId: WalletInstance['userId'],
   ) => TE.TaskEither<Error, O.Option<WalletInstance>>;
 }
 
@@ -78,6 +77,8 @@ export const getWalletInstance =
   (id: WalletInstance['id'], userId: WalletInstance['userId']) =>
   ({ walletInstanceRepository }: WalletInstanceEnv) =>
     pipe(
-      walletInstanceRepository.get(id, userId),
+      walletInstanceRepository.get(id),
+      // if the user is not the same do not return the wallet
+      TE.map(O.filter((wi) => wi.userId === userId)),
       TE.flatMap(TE.fromOption(() => new Error('Wallet-Instance not found'))),
     );

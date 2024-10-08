@@ -3,12 +3,11 @@ import * as TE from 'fp-ts/lib/TaskEither';
 import * as O from 'fp-ts/lib/Option';
 import { makeTestEnv } from './mocks';
 import { CreateWalletAttestationFn } from '../create-wallet-attestation';
+import { makeAssertion, makeHttpRequest } from './data';
 import {
   aJwkKeyPair,
-  aWalletInstance,
-  makeAssertion,
-  makeHttpRequest,
-} from './data';
+  mkWalletInstance,
+} from '../../../../domain/__tests__/data';
 
 describe('CreateWalletAttestationFn', () => {
   it('should return 200 HTTP response given a valid wallet attestation request', async () => {
@@ -23,7 +22,7 @@ describe('CreateWalletAttestationFn', () => {
 
     env.nonceRepository.delete.mockReturnValueOnce(TE.right(void 0));
     env.walletInstanceRepository.get.mockReturnValueOnce(
-      TE.right(O.some(await aWalletInstance())),
+      TE.right(O.some(await mkWalletInstance())),
     );
     env.jwksRepository.get.mockReturnValueOnce(TE.right(aJwkKeyPair));
 

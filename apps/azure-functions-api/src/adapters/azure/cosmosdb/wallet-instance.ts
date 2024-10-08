@@ -1,13 +1,13 @@
 import { pipe } from 'fp-ts/lib/function';
 import * as TE from 'fp-ts/lib/TaskEither';
-import * as RA from 'fp-ts/lib/ReadonlyArray';
 import * as E from 'fp-ts/lib/Either';
 import { Database } from '@azure/cosmos';
 import {
   WalletInstanceCodec,
   WalletInstanceRepository,
 } from '../../../domain/wallet-instance';
-import { decodeFromFeed } from './decode';
+import { decodeFromItem } from './decode';
+import { cosmosErrorToDomainError } from './errors';
 
 export const makeWalletInstanceRepository = (
   db: Database,
@@ -20,26 +20,11 @@ export const makeWalletInstanceRepository = (
         TE.tryCatch(() => container.items.create(data), E.toError),
         TE.map(() => void 0),
       ),
-    get: (id, userId) =>
+    get: (id) =>
       pipe(
-        TE.tryCatch(
-          () =>
-            container.items
-              .query({
-                parameters: [
-                  {
-                    name: '@partitionKey',
-                    value: userId,
-                  },
-                ],
-                query:
-                  'SELECT TOP 1 * FROM c WHERE c.userId = @partitionKey ORDER BY c.createdAt DESC',
-              })
-              .fetchAll(),
-          E.toError,
-        ),
-        TE.flatMapEither(decodeFromFeed(WalletInstanceCodec)),
-        TE.map(RA.head),
+        TE.tryCatch(() => container.item(id, id).read(), E.toError),
+        TE.flatMapEither(decodeFromItem(WalletInstanceCodec)),
+        TE.mapLeft(cosmosErrorToDomainError),
       ),
   };
 };
