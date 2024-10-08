@@ -1,3 +1,8 @@
+data "azurerm_key_vault_secret" "signer_jwk_list_base64" {
+  name         = "SIGNER-JWK-LIST-BASE64"
+  key_vault_id = var.key_vault.id
+}
+
 locals {
   app_settings = {
     NODE_ENV                       = "production"
@@ -17,5 +22,7 @@ locals {
 
     COSMOSDB_ENDPOINT      = var.cosmos_db.endpoint
     COSMOSDB_DATABASE_NAME = var.cosmos_db.database_name
+
+    SIGNER_JWK_LIST_BASE64 = data.azurerm_key_vault_secret.signer_jwk_list_base64.value
   }
 }

@@ -55,6 +55,7 @@ variable "cosmos_db" {
 
 variable "key_vault" {
   type = object({
+    id                  = string
     name                = string
     resource_group_name = string
   })
