@@ -15,10 +15,6 @@ import { WalletInstance, getWalletInstance } from './wallet-instance';
 import { User } from './user';
 import { signJwt } from './signer';
 
-// export interface WalletAttestationEnv {
-//   readonly jwksRepository: JwksRepository;
-// }
-
 export const WalletAttestationRequestHeader = t.type({
   alg: t.string,
   kid: t.string,
