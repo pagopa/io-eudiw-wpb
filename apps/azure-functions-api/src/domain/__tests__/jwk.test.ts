@@ -15,7 +15,6 @@ describe('JwkECPrivateKeyFromBase64Codec', () => {
       'base64',
     );
 
-    console.log(value);
     const actual = JwkECPrivateKeyListFromBase64Codec.decode(value);
     const expected = t.array(JwkPrivateKey).decode(jwkList);
 
