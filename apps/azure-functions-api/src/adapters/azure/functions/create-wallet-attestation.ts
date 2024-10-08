@@ -6,7 +6,7 @@ import { pipe } from 'fp-ts/lib/function';
 import { parseHeaderParameter, parseRequestBody } from './middleware';
 import { CreateWalletAttestationBody } from '../../../generated/definitions/endpoints/CreateWalletAttestationBody';
 import { User } from '../../../domain/user';
-import { errorToProblemJson } from './errors';
+import { errorToProblemJson, logError } from './errors';
 import { createWalletAttestation } from '../../../domain/wallet-attestation';
 import { SignedJWT } from '../../../domain/jwt';
 import { NonceEnv } from '../../../domain/nonce';
@@ -33,6 +33,7 @@ const makeHandler: H.Handler<
       createWalletAttestation(assertion as SignedJWT, userId),
     ),
     RTE.map((wallet_attestation) => ({ wallet_attestation })),
+    RTE.tapError(logError),
     RTE.mapBoth(errorToProblemJson, (res) => H.successJson(res)),
     RTE.orElseW(RTE.of),
   ),

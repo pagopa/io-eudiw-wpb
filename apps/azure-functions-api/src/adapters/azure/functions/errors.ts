@@ -1,4 +1,5 @@
 import * as H from '@pagopa/handler-kit';
+import * as log from '@pagopa/logger';
 
 const isValidationError = (e: Error): e is H.ValidationError =>
   e.name === 'ValidationError';
@@ -21,3 +22,6 @@ export const errorToProblemJson = (
       title: 'Internal Server Error',
     });
 };
+
+export const logError = (error: Error) =>
+  log.errorRTE(`${error.name}: ${error.message}`);

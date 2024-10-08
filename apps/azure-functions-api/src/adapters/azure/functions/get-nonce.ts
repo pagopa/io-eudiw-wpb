@@ -4,7 +4,7 @@ import * as H from '@pagopa/handler-kit';
 import { NonceDetailView } from './../../../generated/definitions/endpoints/NonceDetailView';
 import { NonceEnv, generateNonce } from '../../../domain/nonce';
 import { httpAzureFunction } from '@pagopa/handler-kit-azure-func';
-import { errorToProblemJson } from './errors';
+import { errorToProblemJson, logError } from './errors';
 
 const makeHandler: H.Handler<
   H.HttpRequest,
@@ -15,6 +15,7 @@ const makeHandler: H.Handler<
   pipe(
     generateNonce,
     RTE.map((nonce) => ({ nonce })),
+    RTE.tapError(logError),
     RTE.mapBoth(errorToProblemJson, H.successJson),
     RTE.orElseW(RTE.of),
   ),

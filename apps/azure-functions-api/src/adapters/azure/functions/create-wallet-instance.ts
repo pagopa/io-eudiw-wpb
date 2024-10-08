@@ -6,7 +6,7 @@ import {
   WalletInstanceEnv,
   createWalletInstance,
 } from '../../../domain/wallet-instance';
-import { errorToProblemJson } from './errors';
+import { errorToProblemJson, logError } from './errors';
 import { parseHeaderParameter, parseRequestBody } from './middleware';
 import { CreateWalletInstanceBody } from '../../../generated/definitions/endpoints/CreateWalletInstanceBody';
 import { NonceEnv } from '../../../domain/nonce';
@@ -32,6 +32,7 @@ const makeHandler: H.Handler<
     RTE.flatMap(({ requestBody, userId }) =>
       createWalletInstance(requestBody, userId),
     ),
+    RTE.tapError(logError),
     RTE.mapBoth(errorToProblemJson, () => H.empty),
     RTE.orElseW(RTE.of),
   ),
