@@ -1,4 +1,6 @@
 import * as t from 'io-ts';
+import { pipe } from 'fp-ts/lib/function';
+import * as E from 'fp-ts/lib/Either';
 
 export const ECKey = t.intersection([
   t.type({
@@ -75,3 +77,43 @@ export const JwksMetadata = t.type({
   keys: t.array(JwkPublicKey),
 });
 export type JwksMetadata = t.TypeOf<typeof JwksMetadata>;
+
+const ECPrivateKeyWithKidCodec = t.intersection([
+  ECPrivateKey,
+  t.type({ kid: t.string }),
+]);
+export type ECPrivateKeyWithKid = t.TypeOf<typeof ECPrivateKeyWithKidCodec>;
+
+export const JwkECPrivateKeyListFromBase64Codec = new t.Type<
+  readonly ECPrivateKeyWithKid[],
+  string,
+  unknown
+>(
+  // name: a unique name for this codec
+  'JwkECPrivateKeyFromBase64Codec',
+  // is: a custom type guard
+  t.array(ECPrivateKeyWithKidCodec).is,
+  // validate: succeeds if a value of type I can be decoded to a value of type A
+  (u, c) =>
+    pipe(
+      t.string.validate(u, c),
+      E.flatMap((str) =>
+        E.tryCatch(
+          () => JSON.parse(Buffer.from(str, 'base64').toString('binary')),
+          () => [
+            {
+              value: str,
+              context: c,
+              message: 'cannot decode from base64',
+            },
+          ],
+        ),
+      ),
+      E.flatMap(t.array(ECPrivateKeyWithKidCodec).decode),
+    ),
+  // encode: converts a value of type A to a value of type O
+  (v) =>
+    pipe(JSON.stringify(v), (value) =>
+      Buffer.from(value, 'binary').toString('base64'),
+    ),
+);

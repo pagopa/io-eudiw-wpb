@@ -81,5 +81,11 @@ module "function_api" {
     endpoint            = module.cosmos.cosmos_account.endpoint
   }
 
+  key_vault = {
+    id                  = module.key_vault.key_vault.id
+    name                = module.key_vault.key_vault.name
+    resource_group_name = module.key_vault.key_vault.resource_group_name
+  }
+
   tags = local.tags
 }

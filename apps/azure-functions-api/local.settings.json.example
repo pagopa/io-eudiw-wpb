@@ -9,6 +9,7 @@
     "NODE_ENV": "development",
 
     "COSMOSDB_ENDPOINT": "<put-here-the-the-cosmos-database-endpoint>",
-    "COSMOSDB_DATABASE_NAME": "<put-here-the-name-of-cosmos-database>"
+    "COSMOSDB_DATABASE_NAME": "<put-here-the-name-of-cosmos-database>",
+    "SIGNER_JWK_LIST_BASE64": "<put-here-the-array-of-jwks-in-base64>"
   }
 }
