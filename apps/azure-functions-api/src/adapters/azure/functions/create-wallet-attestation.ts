@@ -34,10 +34,6 @@ const makeHandler: H.Handler<
     ),
     RTE.map((wallet_attestation) => ({ wallet_attestation })),
     RTE.mapBoth(errorToProblemJson, (res) => H.successJson(res)),
-    RTE.mapLeft((error) => {
-      console.log(error);
-      return error;
-    }),
     RTE.orElseW(RTE.of),
   ),
 );
