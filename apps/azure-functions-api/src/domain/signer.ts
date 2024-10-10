@@ -1,5 +1,6 @@
 import { pipe } from 'fp-ts/lib/function';
 import * as E from 'fp-ts/lib/Either';
+import * as RA from 'fp-ts/lib/ReadonlyArray';
 import * as TE from 'fp-ts/lib/TaskEither';
 import * as jose from 'jose';
 import { ECKey, ECPrivateKey, JwkPrivateKey, JwkPublicKey } from './jwk';
@@ -39,3 +40,11 @@ export const signJwt =
         }, E.toError),
       ),
     );
+
+export const getJwkPublicKeyList = ({ jwksRepository }: SignerEnv) =>
+  // TODO: Add list to repository and refactor this function
+  pipe(
+    jwksRepository.get(),
+    TE.map((jwk) => jwk.public),
+    TE.map(RA.of),
+  );
