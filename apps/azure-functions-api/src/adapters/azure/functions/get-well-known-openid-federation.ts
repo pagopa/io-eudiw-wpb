@@ -2,7 +2,7 @@ import { flow, pipe } from 'fp-ts/lib/function';
 import * as RTE from 'fp-ts/lib/ReaderTaskEither';
 import * as H from '@pagopa/handler-kit';
 import { httpAzureFunction } from '@pagopa/handler-kit-azure-func';
-import { getCredentialIssuerMetadata } from '../../../domain/credential-issuer-metadata';
+import { getFederationMetadata } from '../../../domain/openid-federation';
 import { errorToProblemJson, logError } from './errors';
 import { SignerEnv } from '../../../domain/signer';
 
@@ -13,7 +13,7 @@ const makeHandler: H.Handler<
   SignerEnv
 > = H.of(() =>
   pipe(
-    getCredentialIssuerMetadata,
+    getFederationMetadata,
     RTE.tapError(logError),
     RTE.mapBoth(
       errorToProblemJson,
@@ -23,5 +23,4 @@ const makeHandler: H.Handler<
   ),
 );
 
-export const GetWellKnownOpenidCredentialIssuerFn =
-  httpAzureFunction(makeHandler);
+export const GetWellKnownOpenidFederationFn = httpAzureFunction(makeHandler);
