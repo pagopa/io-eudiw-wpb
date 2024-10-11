@@ -31,7 +31,7 @@ export const getFederationMetadata = pipe(
         jwks: {
           keys: jwks,
         },
-        token_endpoint: 'https://wallet.io.pagopa.it/token',
+        token_endpoint: `${baseURL}/token`,
         token_endpoint_auth_methods_supported: ['private_key_jwt'],
         // TODO: Add all supported algorithms
         token_endpoint_auth_signing_alg_values_supported: ['ES256'],
