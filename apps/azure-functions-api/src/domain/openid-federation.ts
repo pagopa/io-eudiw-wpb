@@ -29,7 +29,7 @@ export const getFederationMetadata = pipe(
           `${baseURL}/LoA/hight`,
         ],
         grant_types_supported: [
-          'urn:ietf:params:oauth:grant-type:jwt-client-attestation',
+          'urn:ietf:params:oauth:client-assertion-type:jwt-client-attestation',
         ],
         jwks: {
           keys: jwks,
