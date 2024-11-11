@@ -9,6 +9,7 @@ export const getFederationMetadata = pipe(
   RTE.Do,
   RTE.apSW('jwks', getJwkPublicKeyList),
   RTE.map(({ jwks }) => ({
+    authority_hints: [],
     iss: baseURL,
     jwks: {
       keys: jwks,
