@@ -1,5 +1,11 @@
 # azure-functions-api
 
+## 0.1.1
+
+### Patch Changes
+
+- d853dcb: [EUDIW-160] Add `authority_hints` to the response of the `.well-known/openid-federation` endpoint
+
 ## 0.1.0
 
 ### Minor Changes
