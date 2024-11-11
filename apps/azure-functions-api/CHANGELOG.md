@@ -1,5 +1,11 @@
 # azure-functions-api
 
+## 0.1.2
+
+### Patch Changes
+
+- d427a32: [EUDIW-160] Change `grant_types_supported`
+
 ## 0.1.1
 
 ### Patch Changes
