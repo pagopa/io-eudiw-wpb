@@ -5,6 +5,7 @@ import { CreateWalletInstanceBody as WalletInstanceRequest } from '../generated/
 import { JwkPublicKey } from './jwk';
 import { extractHardwareKeyFromIOS } from './hardwarekey-ios';
 import { extractHardwareKeyFromAndroid } from './hardwarekey-android';
+import { extractHardwareKeyFromPlatformAgnostic } from './hardwarekey-platform-agnostic';
 
 export interface ValidKeyAttestation {
   // JWK public key
@@ -16,6 +17,7 @@ export const validateKeyAttestation = (request: WalletInstanceRequest) =>
     [
       extractHardwareKeyFromIOS(request),
       extractHardwareKeyFromAndroid(request),
+      extractHardwareKeyFromPlatformAgnostic(request),
     ],
     firstRightOrLefts,
     TE.mapError((errors) => new Error(`${errors.map((_) => _.message)}`)),
