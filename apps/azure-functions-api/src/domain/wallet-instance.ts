@@ -80,5 +80,12 @@ export const getWalletInstance =
       walletInstanceRepository.get(id),
       // if the user is not the same do not return the wallet
       TE.map(O.filter((wi) => wi.userId === userId)),
-      TE.flatMap(TE.fromOption(() => new Error('Wallet-Instance not found'))),
+      TE.flatMap(
+        TE.fromOption(
+          () =>
+            new Error(
+              `Wallet-Instance not found: { id: ${id}, userId: ${userId}`,
+            ),
+        ),
+      ),
     );
