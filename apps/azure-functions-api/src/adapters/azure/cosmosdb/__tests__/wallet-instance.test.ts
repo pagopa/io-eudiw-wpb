@@ -12,16 +12,19 @@ describe('makeWalletInstanceRepository', () => {
       const mockDB = makeDatabaseMock();
       const testDB = mockDB as unknown as Database;
       const aWalletInstance = await mkWalletInstance();
-      const { id } = aWalletInstance;
+      const { id, userId } = aWalletInstance;
 
       mockDB.container('').item.mockReturnValueOnce({
         read: async () => Promise.resolve({ resource: aWalletInstance }),
       });
 
-      const actual = await makeWalletInstanceRepository(testDB).get(id)();
+      const actual = await makeWalletInstanceRepository(testDB).get({
+        id,
+        userId,
+      })();
 
       expect(actual).toStrictEqual(E.right(O.some(aWalletInstance)));
-      expect(mockDB.container('').item).toBeCalledWith(id, id);
+      expect(mockDB.container('').item).toBeCalledWith(id, userId);
     });
   });
 });
