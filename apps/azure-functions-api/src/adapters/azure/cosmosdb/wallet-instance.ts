@@ -20,9 +20,9 @@ export const makeWalletInstanceRepository = (
         TE.tryCatch(() => container.items.create(data), E.toError),
         TE.map(() => void 0),
       ),
-    get: (id) =>
+    get: ({ id, userId }) =>
       pipe(
-        TE.tryCatch(() => container.item(id, id).read(), E.toError),
+        TE.tryCatch(() => container.item(id, userId).read(), E.toError),
         TE.flatMapEither(decodeFromItem(WalletInstanceCodec)),
         TE.mapLeft(cosmosErrorToDomainError),
       ),

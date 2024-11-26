@@ -3,7 +3,7 @@ import { getJwkPublicKeyList, signJwt } from './signer';
 import { pipe } from 'fp-ts/lib/function';
 
 // TODO: Move to configuration
-const baseURL = 'https://io-d-itn-eudiw-api-func-01.azurewebsites.net';
+export const baseURL = 'https://io-d-itn-eudiw-api-func-01.azurewebsites.net';
 
 export const getFederationMetadata = pipe(
   RTE.Do,
