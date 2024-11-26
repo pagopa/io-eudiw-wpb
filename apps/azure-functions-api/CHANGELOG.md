@@ -1,5 +1,16 @@
 # azure-functions-api
 
+## 0.3.0
+
+### Minor Changes
+
+- fd31990: [EUDIW-197] Remove authentication from all endpoints
+
+### Patch Changes
+
+- a19d6cc: [WUDIW-198] Fix get wallet instance and verify hardware signature
+  [WUDIW-198] Fix wallet instance attestation format
+
 ## 0.2.0
 
 ### Minor Changes
