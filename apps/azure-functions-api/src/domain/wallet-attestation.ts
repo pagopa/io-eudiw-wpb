@@ -14,6 +14,7 @@ import { validateNonce } from './nonce';
 import { WalletInstance, getWalletInstance } from './wallet-instance';
 import { User } from './user';
 import { signJwt } from './signer';
+import { baseURL } from './openid-federation';
 
 export const WalletAttestationRequestHeader = t.type({
   alg: t.string,
@@ -119,6 +120,7 @@ const verifyHardwareSignature = (
     else throw new Error('hardware_signature is invalid');
   }, E.toError);
 
+// TODO: Take baseURL and other information from openid-federation metadata
 const makeWalletAttestation = (war: WalletAttestationRequest) =>
   pipe(
     RTE.of({
@@ -126,6 +128,21 @@ const makeWalletAttestation = (war: WalletAttestationRequest) =>
         typ: 'wallet-attestation+jwt',
       },
       payload: {
+        iss: baseURL,
+        aal: `${baseURL}/LoA/basic`,
+        authorization_endpoint: 'eudiw:',
+        vp_formats_supported: {
+          'vc+sd-jwt': {
+            'sd-jwt_alg_values': ['ES256'],
+          },
+          'vp+sd-jwt': {
+            'sd-jwt_alg_values': ['ES256'],
+          },
+        },
+        presentation_definition_uri_supported: false,
+        request_object_signing_alg_values_supported: ['ES256'],
+        response_modes_supported: ['form_post.jwt'],
+        response_types_supported: ['vp_token'],
         sub: war.header.kid,
         cnf: war.payload.cnf,
       },
