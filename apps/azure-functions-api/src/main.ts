@@ -53,21 +53,21 @@ app.http('Info', {
 });
 
 app.http('GetNonce', {
-  authLevel: 'function',
+  authLevel: 'anonymous',
   handler: GetNonceFn(env),
   methods: ['GET'],
   route: 'nonce',
 });
 
 app.http('CreateWalletInstance', {
-  authLevel: 'function',
+  authLevel: 'anonymous',
   handler: CreateWalletInstanceFn(env),
   methods: ['POST'],
   route: 'wallet-instances',
 });
 
 app.http('CreateWalletAttestation', {
-  authLevel: 'function',
+  authLevel: 'anonymous',
   handler: CreateWalletAttestationFn(env),
   methods: ['POST'],
   route: 'token',
