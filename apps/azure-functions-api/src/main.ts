@@ -12,6 +12,7 @@ import { makeWalletInstanceRepository } from './adapters/azure/cosmosdb/wallet-i
 import { CreateWalletAttestationFn } from './adapters/azure/functions/create-wallet-attestation';
 import { makeJwksRepository } from './adapters/in-memory/signer';
 import { GetWellKnownOpenidFederationFn } from './adapters/azure/functions/get-well-known-openid-federation';
+import { GetWellKnownWalletMetadataFn } from './adapters/azure/functions/get-well-known-wallet-metadata';
 
 const config = pipe(
   getConfigOrError(process.env),
@@ -78,4 +79,11 @@ app.http('GetWellKnownOpenidFederation', {
   handler: GetWellKnownOpenidFederationFn(env),
   methods: ['GET'],
   route: '.well-known/openid-federation',
+});
+
+app.http('GetWellKnownWalletMetadata', {
+  authLevel: 'anonymous',
+  handler: GetWellKnownWalletMetadataFn(env),
+  methods: ['GET'],
+  route: '.well-known/wallet-metadata',
 });
