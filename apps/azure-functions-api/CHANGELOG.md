@@ -1,5 +1,12 @@
 # azure-functions-api
 
+## 0.3.1
+
+### Patch Changes
+
+- 556b6dc: [WLEO-233] Added wallet metadata for Potential playground
+  [WLEO-233] Added metadata to openid-federation
+
 ## 0.3.0
 
 ### Minor Changes
