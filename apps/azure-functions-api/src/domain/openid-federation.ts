@@ -39,8 +39,7 @@ export const getFederationMetadata = pipe(
         // TODO: Add all supported algorithms
         token_endpoint_auth_signing_alg_values_supported: ['ES256'],
       },
-      authorization_endpoint:
-        'https://wallet-solution.digital-strategy.europa.eu/authorization',
+      authorization_endpoint: 'haip://',
       response_types_supported: ['vp_token'],
       vp_formats_supported: {
         'dc+sd-jwt': {
