@@ -1,5 +1,11 @@
 # azure-functions-api
 
+## 0.4.0
+
+### Minor Changes
+
+- e48b946: Migration to turbo version 2
+
 ## 0.3.1
 
 ### Patch Changes
