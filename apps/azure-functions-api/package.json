@@ -1,6 +1,6 @@
 {
   "name": "azure-functions-api",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "description": "Azure Function REST API Template",
   "main": "./dist/main.js",
   "//": "comment! The 'files': host.json property is required until dx/web_app_deploy is fixed",
