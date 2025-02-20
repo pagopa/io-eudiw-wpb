@@ -12,13 +12,21 @@ export const getWalletMetadata = pipe(
     authorization_endpoint: 'haip://',
     response_types_supported: ['vp_token'],
     vp_formats_supported: {
-      'dc+sd-jwt': {
+      'vc+sd-jwt': {
         'sd-jwt_alg_values': ['ES256'],
       },
+      mso_mdoc: {},
     },
     client_id_schemes_supported: ['pre-registred', 'x509_san_dns'],
     jwks: {
       keys: jwks,
     },
+    authorization_encryption_alg_values_supported: ['ECDH-ES'],
+    authorization_encryption_enc_values_supported: [
+      'A256CBC-HS512',
+      'A128CBC-HS256',
+      'A128CBC-HS256',
+      'A256GCM',
+    ],
   })),
 );
