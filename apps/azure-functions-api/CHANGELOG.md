@@ -1,5 +1,11 @@
 # azure-functions-api
 
+## 0.4.1
+
+### Patch Changes
+
+- f7b0706: feat: [WLEO-274] Adding metadata about ISO 18013-7
+
 ## 0.4.0
 
 ### Minor Changes
