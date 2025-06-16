@@ -5,7 +5,7 @@ import { pipe } from 'fp-ts/lib/function';
 import { parseHeaderParameter, parseRequestBody } from './middleware';
 import { User } from '../../../domain/user';
 import { errorToProblemJson, logError } from './errors';
-import { createWalletAttestation } from '../../../domain/wallet-attestation';
+import { createWalletAttestation } from '../../../domain/wallet-attestations';
 import { SignedJWT } from '../../../domain/jwt';
 import { NonceEnv } from '../../../domain/nonce';
 import { WalletInstanceEnv } from '../../../domain/wallet-instance';
