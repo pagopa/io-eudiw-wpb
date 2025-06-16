@@ -9,7 +9,7 @@ export const getFederationMetadata = pipe(
   RTE.Do,
   RTE.apSW('jwks', getJwkPublicKeyList),
   RTE.map(({ jwks }) => ({
-    authority_hints: ['https://potential-wallet-it-trust-anchor.it/'],
+    authority_hints: ['https://potential-wallet-it-trust-anchor.it'],
     iss: baseURL,
     jwks: {
       keys: jwks,
