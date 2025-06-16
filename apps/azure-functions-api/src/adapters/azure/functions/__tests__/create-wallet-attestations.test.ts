@@ -2,8 +2,8 @@ import { describe, expect, it } from 'vitest';
 import * as TE from 'fp-ts/lib/TaskEither';
 import * as O from 'fp-ts/lib/Option';
 import { makeTestEnv } from './mocks';
-import { CreateWalletAttestationFn } from '../create-wallet-attestation';
-import { makeAssertion, makeHttpRequest } from './data';
+import { CreateWalletAttestationFnV2 } from '../create-wallet-attestations';
+import { makeAssertionV2, makeHttpRequest } from './data';
 import {
   aJwkKeyPair,
   mkWalletInstance,
@@ -14,8 +14,8 @@ describe('CreateWalletAttestationFn', () => {
     const { env, ctx } = makeTestEnv();
     const request = makeHttpRequest(
       {
-        grant_type: 'urn:ietf:params:oauth:grant-type:jwt-bearer',
-        assertion: await makeAssertion(),
+        //grant_type: 'urn:ietf:params:oauth:grant-type:jwt-bearer',
+        assertion: await makeAssertionV2(),
       },
       { 'x-user-id': 'aUserId' },
     );
@@ -26,7 +26,7 @@ describe('CreateWalletAttestationFn', () => {
     );
     env.jwksRepository.get.mockReturnValueOnce(TE.right(aJwkKeyPair));
 
-    const actual = await CreateWalletAttestationFn(env)(request, ctx);
+    const actual = await CreateWalletAttestationFnV2(env)(request, ctx);
 
     expect(actual.status).toStrictEqual(200);
   });

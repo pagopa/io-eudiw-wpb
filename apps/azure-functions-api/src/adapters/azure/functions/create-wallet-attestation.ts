@@ -7,7 +7,7 @@ import { parseHeaderParameter, parseRequestBody } from './middleware';
 import { CreateWalletAttestationBody } from '../../../generated/definitions/endpoints/CreateWalletAttestationBody';
 import { User } from '../../../domain/user';
 import { errorToProblemJson, logError } from './errors';
-import { createWalletAttestation } from '../../../domain/wallet-attestations';
+import { createWalletAttestation } from '../../../domain/wallet-attestation';
 import { SignedJWT } from '../../../domain/jwt';
 import { NonceEnv } from '../../../domain/nonce';
 import { WalletInstanceEnv } from '../../../domain/wallet-instance';
