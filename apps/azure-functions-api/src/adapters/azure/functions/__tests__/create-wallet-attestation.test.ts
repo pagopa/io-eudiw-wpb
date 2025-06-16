@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import * as TE from 'fp-ts/lib/TaskEither';
 import * as O from 'fp-ts/lib/Option';
 import { makeTestEnv } from './mocks';
-import { CreateWalletAttestationFn } from '../create-wallet-attestations';
+import { CreateWalletAttestationFnV2 } from '../create-wallet-attestations';
 import { makeAssertionV2, makeHttpRequest } from './data';
 import {
   aJwkKeyPair,
@@ -26,7 +26,7 @@ describe('CreateWalletAttestationFn', () => {
     );
     env.jwksRepository.get.mockReturnValueOnce(TE.right(aJwkKeyPair));
 
-    const actual = await CreateWalletAttestationFn(env)(request, ctx);
+    const actual = await CreateWalletAttestationFnV2(env)(request, ctx);
 
     expect(actual.status).toStrictEqual(200);
   });

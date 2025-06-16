@@ -46,4 +46,4 @@ const makeHandler: H.Handler<
   ),
 );
 
-export const CreateWalletAttestationFn = httpAzureFunction(makeHandler);
+export const CreateWalletAttestationFnV2 = httpAzureFunction(makeHandler);

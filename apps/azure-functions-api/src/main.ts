@@ -10,6 +10,7 @@ import { makeNonceRepository } from './adapters/azure/cosmosdb/nonce';
 import { CreateWalletInstanceFn } from './adapters/azure/functions/create-wallet-instance';
 import { makeWalletInstanceRepository } from './adapters/azure/cosmosdb/wallet-instance';
 import { CreateWalletAttestationFn } from './adapters/azure/functions/create-wallet-attestation';
+import { CreateWalletAttestationFnV2 } from './adapters/azure/functions/create-wallet-attestations';
 import { makeJwksRepository } from './adapters/in-memory/signer';
 import { GetWellKnownOpenidFederationFn } from './adapters/azure/functions/get-well-known-openid-federation';
 import { GetWellKnownWalletMetadataFn } from './adapters/azure/functions/get-well-known-wallet-metadata';
@@ -76,7 +77,7 @@ app.http('CreateWalletAttestation', {
 
 app.http('CreateWalletAttestations', {
   authLevel: 'anonymous',
-  handler: CreateWalletAttestationFn(env),
+  handler: CreateWalletAttestationFnV2(env),
   methods: ['POST'],
   route: 'wallet-attestations',
 });
