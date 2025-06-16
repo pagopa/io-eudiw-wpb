@@ -33,6 +33,7 @@ const makeHandler: H.Handler<
       createWalletAttestation(assertion as SignedJWT, userId),
     ),
     RTE.map((wallet_attestation) => ({
+      // TODO: [WLEO-463] add attestation in other format sd-jwt and mdoc
       wallet_attestations: [
         {
           format: 'jwt',
