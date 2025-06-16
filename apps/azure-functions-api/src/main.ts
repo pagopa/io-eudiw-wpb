@@ -74,6 +74,13 @@ app.http('CreateWalletAttestation', {
   route: 'token',
 });
 
+app.http('CreateWalletAttestations', {
+  authLevel: 'anonymous',
+  handler: CreateWalletAttestationFn(env),
+  methods: ['POST'],
+  route: 'wallet-attestations',
+});
+
 app.http('GetWellKnownOpenidFederation', {
   authLevel: 'anonymous',
   handler: GetWellKnownOpenidFederationFn(env),
