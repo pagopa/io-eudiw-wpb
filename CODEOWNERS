@@ -1,3 +1,4 @@
 # see https://help.github.com/en/articles/about-code-owners#example-of-a-codeowners-file
 
-* @pagopa/engineering-team-devex
+* @pagopa/io-wallet
+/infra/identity @pagopa/io-wallet @pagopa/engineering-team-devex
