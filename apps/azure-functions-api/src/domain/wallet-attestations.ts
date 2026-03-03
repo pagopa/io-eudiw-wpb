@@ -14,7 +14,7 @@ import { validateNonce } from './nonce';
 import { WalletInstance, getWalletInstance } from './wallet-instance';
 import { User } from './user';
 import { signJwt } from './signer';
-import { baseURL } from './openid-federation';
+import { baseURL, getFederationEntityStatement } from './openid-federation';
 
 export const WalletAttestationRequestHeader = t.type({
   alg: t.string,
@@ -123,18 +123,22 @@ const verifyHardwareSignature = (
 // TODO: Take baseURL and other information from openid-federation metadata
 const makeWalletAttestation = (war: WalletAttestationRequest) =>
   pipe(
-    RTE.of({
+    RTE.bindTo('entityConfigurationJwt')(getFederationEntityStatement),
+    RTE.map(({ entityConfigurationJwt }) => ({
       header: {
         typ: 'oauth-client-attestation+jwt',
+        trust_chain: [entityConfigurationJwt],
       },
       payload: {
         iss: baseURL,
         aal: `${baseURL}/LoA/basic`,
         sub: war.header.kid,
         cnf: war.payload.cnf,
+        exp: war.payload.exp,
+        iat: war.payload.iat,
         wallet_link: 'https://wp.example.org/',
         wallet_name: 'wp.example.org',
       },
-    }),
+    })),
     RTE.flatMap(signJwt),
   );

@@ -5,7 +5,7 @@ import { pipe } from 'fp-ts/lib/function';
 // TODO: Move to configuration
 export const baseURL = 'https://io-d-itn-eudiw-api-func-01.azurewebsites.net';
 
-export const getFederationMetadata = pipe(
+const getFederationMetadataPayload = pipe(
   RTE.Do,
   RTE.apSW('jwks', getJwkPublicKeyList),
   RTE.map(({ jwks }) => ({
@@ -50,8 +50,14 @@ export const getFederationMetadata = pipe(
     },
     sub: baseURL,
   })),
+);
+
+export const getFederationEntityStatement = pipe(
+  getFederationMetadataPayload,
   RTE.flatMap((payload) =>
     signJwt({ header: { typ: 'entity-statement+jwt' }, payload }),
   ),
   RTE.map(({ jwt }) => jwt),
 );
+
+export const getFederationMetadata = getFederationEntityStatement;

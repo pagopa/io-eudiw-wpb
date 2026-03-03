@@ -24,7 +24,7 @@ describe('CreateWalletAttestationFn', () => {
     env.walletInstanceRepository.get.mockReturnValueOnce(
       TE.right(O.some(await mkWalletInstance())),
     );
-    env.jwksRepository.get.mockReturnValueOnce(TE.right(aJwkKeyPair));
+    env.jwksRepository.get.mockReturnValue(TE.right(aJwkKeyPair));
 
     const actual = await CreateWalletAttestationFnV2(env)(request, ctx);
 
