@@ -15,7 +15,7 @@ jobs:
       group: ${{ github.workflow }}-cd
       # Override this configuration to prevent cancelling a running deploy.
       cancel-in-progress: false
-    uses: pagopa/dx/.github/workflows/web_app_deploy.yaml@main
+    uses: pagopa/dx/.github/workflows/web_app_deploy.yaml@e08d8ce496df31036c9b04f42178c04947415cfc # main
     secrets: inherit
     with:
       workspace_name: azure-functions-api
