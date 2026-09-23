@@ -1,5 +1,8 @@
 # EUDI Wallet Provider Backend (WP)
 
+> [!WARNING]  
+> **Disclaimer:** This code is used exclusively as a testing environment for the European consortium **Potential** and **Aptitude**.
+
 This repository contains the code to implement the wallet provider backend (WP), see [section 4.2 of EUDIW Architecture and Reference Framework](https://github.com/eu-digital-identity-wallet/eudi-doc-architecture-and-reference-framework/blob/v1.4.1/docs/arf.md#42-reference-architecture).
 
 ## Requirements
